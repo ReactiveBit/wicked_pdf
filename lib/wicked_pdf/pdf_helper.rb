@@ -7,9 +7,12 @@ module PdfHelper
     # as the result of adding other gems.
     return if base != ActionController::Base
 
+    # conflicts with remotipart
+    # more details on this: https://github.com/mileszs/wicked_pdf/issues/111
+
     base.class_eval do
-      alias_method_chain :render, :wicked_pdf
-      alias_method_chain :render_to_string, :wicked_pdf
+      #alias_method_chain :render, :wicked_pdf
+      #alias_method_chain :render_to_string, :wicked_pdf
       after_filter :clean_temp_files
     end
   end
