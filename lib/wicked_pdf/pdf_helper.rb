@@ -2,8 +2,15 @@ module PdfHelper
   require 'wicked_pdf'
   require 'tempfile'
 
-  # the self.included method removed
-  # more details at https://github.com/mileszs/wicked_pdf/issues/111
+  def self.included(base)
+    # Protect from trying to augment modules that appear
+    # as the result of adding other gems.
+    return if base != ActionController::Base
+
+    # conflicts with remotipart
+    # more details on this: https://github.com/mileszs/wicked_pdf/issues/111
+
+  end
 
   def render_with_wicked_pdf(options = nil, *args, &block)
     if options.is_a?(Hash) && options.has_key?(:pdf)
